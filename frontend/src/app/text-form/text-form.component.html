@@ -1,0 +1,17 @@
+<h1>SpaCy Explorer</h1>
+<div>
+    <form [formGroup]="uploadForm" (ngSubmit)="onSubmit()">
+        <mat-form-field>
+            <mat-label>Sentecja</mat-label>
+            <textarea matInput [formControl]="name"></textarea>
+        </mat-form-field>
+        <div>
+            <button mat-raised-button color="primary" type="submit">Primary</button>
+        </div>
+    </form>
+</div>
+<mat-divider></mat-divider>
+<span *ngFor="let token of tokens" matBadge="4" matBadgeOverlap="false">{{token.pos=="PUNCT" ? "" : "
+    "}}{{token.text}}</span>
+<mat-divider></mat-divider>
+<pre>{{ this.tokens | json}}</pre>

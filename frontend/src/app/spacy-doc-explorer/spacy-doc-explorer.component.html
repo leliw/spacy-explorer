@@ -1,0 +1,46 @@
+<a href="https://universaldependencies.org/u/pos/">Universal POS tags</a>
+
+<form [formGroup]="form" novalidate (ngSubmit)="onSubmit()">
+    <mat-card class="spacy-card">
+        <mat-card-header>
+            <mat-card-title>SpaCy Explorer</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <div class="row">
+                <div class="col">
+                    <mat-form-field class="full-width">
+                        <textarea matInput placeholder="Sentencja / zdanie do analizy"
+                            formControlName="sentence"></textarea>
+                        <mat-error *ngIf="form.controls['sentence'].hasError('required')">
+                            Sentencja jest <strong>wymagana</strong>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <mat-divider></mat-divider>
+            <app-spacy-token [tokens]="tokens" style="display: block; word-wrap: break-word;"
+                class="full-width"></app-spacy-token>
+        </mat-card-content>
+        <mat-card-actions>
+            <button mat-raised-button color="primary" type="submit">Analizuj</button>
+        </mat-card-actions>
+        <mat-card-footer>
+            <ul>
+                <li><span class="noun">rzeczownik</span> (<span class="propn">właściwy</span>) - kto? co?,</li>
+                <li><span class="verb">czasownik</span> - co robi? co się z nim dzieje?,</li>
+                <li><span class="adj">przymiotnik</span> - jaki? jaka? jakie? czyj? czyja? czyje? który? która? które?,
+                </li>
+                <li><span class="adv">przysłówek</span> - jak? gdzie? kiedy?,</li>
+                <li><span class="pron">zaimek</span> - zastępuje inne wyrazy,</li>
+                <li><span class="adp">przyimek</span> - łączy się najczęściej z rzeczownikiem,</li>
+                <li><span class="cconj">spójnik</span>,</li>
+                <li><span class="part">partykuła</span>.</li>
+            </ul>
+        </mat-card-footer>
+    </mat-card>
+</form>
+
+<mat-divider></mat-divider>
+<img *ngIf="this.guid" src="http://localhost:8000/api/spacy/{{this.guid}}/display" />
+<mat-divider></mat-divider>
+<pre>{{ this.tokens | json}}</pre>

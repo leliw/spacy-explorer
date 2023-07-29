@@ -1,0 +1,64 @@
+.full-width {
+  width: 100%;
+}
+
+.spacy-card {
+  min-width: 120px;
+  margin: 20px auto;
+}
+
+.mat-radio-button {
+  display: block;
+  margin: 5px 0;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+}
+
+.col {
+  flex: 1;
+  margin-right: 20px;
+}
+
+.col:last-child {
+  margin-right: 0;
+}
+
+
+::ng-deep.noun {
+    background-color: lightblue;
+}
+
+::ng-deep.propn {
+    background-color: skyblue
+}
+
+::ng-deep.verb {
+    background-color: lightcoral;
+}
+
+::ng-deep.adj {
+    background-color: lightgreen;
+}
+
+::ng-deep.adv {
+    background-color: lightpink;
+}
+
+::ng-deep.pron{
+    background-color: lightskyblue;
+}
+
+::ng-deep.adp {
+    background-color: lightgray;
+}
+
+::ng-deep.cconj {
+    background-color: lightcyan;
+}
+
+::ng-deep.part {
+    background-color: lightyellow;
+}
