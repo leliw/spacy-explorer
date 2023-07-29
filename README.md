@@ -8,7 +8,7 @@ Serwer backend Python:
 
 ```bash
 ..\scrapy-env\Scripts\activate
-uvicorn main:app –-reload
+uvicorn main:app --reload
 ```
 
 w drugim terminalu należy odpalić frontend:
@@ -17,3 +17,5 @@ w drugim terminalu należy odpalić frontend:
 cd frontend
 ng serve
 ```
+
+Uruchomiony program jest dostępny pod adresem <http://localhost:4200/>.
