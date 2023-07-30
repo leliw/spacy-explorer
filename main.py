@@ -45,8 +45,6 @@ async def get_spacy(guid: str):
     doc = nlp(text)
     return doc2json(doc)
 
-
-
 @app.get("/api/spacy/{guid}/display")
 async def display(guid: str):
     text = readContent(guid)
@@ -59,13 +57,17 @@ def doc2json(doc):
     for w in doc:
         ret.append({
             "text": w.text,
-             "lema": w.lemma_,
-             "pos": w.pos_,
-             "tag": w.tag_,
-             "dep": w.dep_,
+            "lema": w.lemma_,
+            "pos": w.pos_,
+            "tag": w.tag_,
+            "dep": w.dep_,
             "shape": w.shape_,
             "is_alpha": w.is_alpha,
-            "is_stop": w.is_stop
+            "is_stop": w.is_stop,
+            "head_text": w.head.text,
+            "head_lema": w.head.lemma_,
+            "head_pos": w.head.pos_,
+            "children" : [child.lemma_ for child in w.children] 
             })
     return ret
 

@@ -12,10 +12,12 @@ import { TextFormComponent } from './text-form/text-form.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatDividerModule } from '@angular/material/divider';
-import { SpacyDocExplorerComponent } from './spacy-doc-explorer/spacy-doc-explorer.component';
 import { MatSelectModule } from '@angular/material/select';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatCardModule } from '@angular/material/card';
+import { TooltipPosition, MatTooltipModule } from '@angular/material/tooltip';
+
+import { SpacyDocExplorerComponent } from './spacy-doc-explorer/spacy-doc-explorer.component';
 import { SpacyTokenComponent } from './spacy-token/spacy-token.component';
 
 @NgModule({
@@ -39,7 +41,8 @@ import { SpacyTokenComponent } from './spacy-token/spacy-token.component';
         MatDividerModule,
         MatSelectModule,
         MatRadioModule,
-        MatCardModule
+        MatCardModule,
+        MatTooltipModule
     ],
     providers: [],
     bootstrap: [AppComponent]

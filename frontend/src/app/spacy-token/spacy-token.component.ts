@@ -9,6 +9,10 @@ export interface Token {
     shape: string
     is_alpha: boolean
     is_stop: boolean
+    head_text: string
+    head_lema: string
+    head_pos: string
+    children: string[]
 }
 
 @Component({
@@ -18,4 +22,8 @@ export interface Token {
 })
 export class SpacyTokenComponent {
     @Input() tokens!: Token[];
+
+    getTooltipText(token: Token) {
+        return `Tag:${token.tag}; Dep:${token.dep}`;
+    }
 }

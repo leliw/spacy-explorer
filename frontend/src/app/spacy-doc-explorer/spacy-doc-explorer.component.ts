@@ -1,8 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, inject } from '@angular/core';
-
 import { FormBuilder, Validators } from '@angular/forms';
-import { Token } from '../text-form/text-form.component';
+import { Token } from '../spacy-token/spacy-token.component';
 
 
 @Component({

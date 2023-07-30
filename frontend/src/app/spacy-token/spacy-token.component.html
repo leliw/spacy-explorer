@@ -1,4 +1,5 @@
 <span *ngFor="let token of tokens"
+[matTooltip]="getTooltipText(token)"
 [ngClass]="{
     'space-before': token.pos!='PUNCT',
     'noun' : token.pos=='NOUN',

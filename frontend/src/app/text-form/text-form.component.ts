@@ -1,18 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
+import { Token } from '../spacy-token/spacy-token.component';
 
-
-export interface Token {
-    text: string
-    lema: string
-    pos: string
-    tag: string
-    dep: string
-    shape: string
-    is_alpha: boolean
-    is_stop: boolean
-}
 
 @Component({
     selector: 'app-text-form',
@@ -45,3 +35,5 @@ export class TextFormComponent implements OnInit {
 
     }
 }
+
+
