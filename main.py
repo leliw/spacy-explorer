@@ -3,15 +3,12 @@ import os, tempfile
 import uuid
 
 from fastapi import FastAPI, Response
-from fastapi.responses import HTMLResponse, StreamingResponse
 from pydantic import BaseModel
 
 import spacy
 from spacy import displacy
 
 nlp = spacy.load("pl_core_news_sm")
-
-# logger = logging.getLogger(__name__)
 
 app = FastAPI()
 
