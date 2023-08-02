@@ -6,6 +6,8 @@ import hashlib
 from fastapi import FastAPI, Response
 from pydantic import BaseModel
 
+import json
+
 import spacy
 from spacy import displacy
 
@@ -26,7 +28,20 @@ async def post(item: Item):
     with open(fname, '+tw') as f:
         f.write(text) 
         f.close()
-    return { "guid": guid }
+    doc = nlp(text)
+    retList = []
+    for w in doc.sents:
+        ret = {
+            "sent": w.text,
+            "start": w.start,
+            "start_char": w.start_char,
+            "end": w.end,
+            "end_char": w.end_char
+            }
+        retList.append(ret)
+    with open(os.path.join(tmpDir, guid + ".json"), 'tw') as outfile:
+        json.dump({ "text": text, "sents": retList }, outfile)
+    return { "guid": guid, "sentsSize": len(retList) }
 
 @app.get("/api/spacy/explain")
 async def explain(label: str):
@@ -35,14 +50,14 @@ async def explain(label: str):
 
 @app.get("/api/spacy/{guid}")
 async def get_spacy(guid: str):
-    text = readContent(guid)
-    doc = nlp(text)
+    data = readContent(guid)
+    doc = nlp(data["text"])
     return doc2json(doc)
 
-@app.get("/api/spacy/{guid}/display")
-async def display(guid: str):
-    text = readContent(guid)
-    doc = nlp(text)
+@app.get("/api/spacy/{guid}/sents/{index}/display")
+async def display(guid: str, index: int):
+    data = readContent(guid)
+    doc = nlp(data["sents"][index]["sent"])
     svg = displacy.render(doc, style="dep")
     return Response(svg, media_type="image/svg+xml")
 
@@ -67,11 +82,9 @@ def doc2json(doc):
 
 def readContent(guid: str): 
     tmpDir = tempfile.gettempdir()
-    fname = os.path.join(tmpDir, guid + ".txt")
-    print(fname)
-    with open(fname, 'tr') as f:
-        text = f.read() 
-        f.close()
-    return text
+    fname = os.path.join(tmpDir, guid + ".json")
+    with open(fname, 'tr') as json_file:
+        data = json.load(json_file)
+    return data
 
 # app.mount("/", StaticFiles(directory="static", html = True), name="static")

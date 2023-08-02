@@ -15,6 +15,7 @@ export class SpacyDocExplorerComponent {
         sentence: ['', Validators.required],
     });
     guid!: string;
+    sentsSize!: number;
     tokens!: Token[];
     SERVER_URL = "/api/spacy";
 
@@ -25,9 +26,10 @@ export class SpacyDocExplorerComponent {
     }
 
     onSubmit(): void {
-        this.http.post<{ guid: string }>(this.SERVER_URL, { "text": this.form.controls['sentence'].value })
+        this.http.post<{ guid: string, sentsSize: number }>(this.SERVER_URL, { "text": this.form.controls['sentence'].value })
             .subscribe(g => {
                 this.guid = g.guid;
+                this.sentsSize = g.sentsSize;
                 this.http.get<Token[]>(this.SERVER_URL + "/" + this.guid)
                     .subscribe(s => this.tokens = s)
             });
