@@ -1,6 +1,7 @@
 import io
 import os, tempfile
 import uuid
+import hashlib
 
 from fastapi import FastAPI, Response
 from pydantic import BaseModel
@@ -15,19 +16,15 @@ app = FastAPI()
 class Item(BaseModel):
     text: str
 
-@app.get("/api/test")
-def test():
-    doc = nlp("Poszła Karolinka za stodołę srać, a Karliczek za nią, jak za Młodą Panią, dupę podcierać.")
-    return doc2json(doc)
-
 @app.post("/api/spacy")
 async def post(item: Item):
+    text = item.text
+    md5 = hashlib.md5(text.encode('utf-8'))
     tmpDir = tempfile.gettempdir()
-    guid = str(uuid.uuid4())
+    guid = str(uuid.UUID(md5.hexdigest()))
     fname = os.path.join(tmpDir, guid + ".txt")
-    print(fname)
     with open(fname, '+tw') as f:
-        f.write(item.text) 
+        f.write(text) 
         f.close()
     return { "guid": guid }
 
