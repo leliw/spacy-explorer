@@ -19,3 +19,18 @@ ng serve
 ```
 
 Uruchomiony program jest dostępny pod adresem <http://localhost:4200/>.
+
+## Kompilacja wersj produkcyjnej
+
+W pliku `angular.json` ustawiona jest kompilacja plików produkcyjnych do
+katalogu `../static`, a aplikacja napisana w Python serwuje pliki z tego
+katalogu jako pliki statyczne w katalogu głównym aplikacji. Budowa aplikacji
+w Angular odbywa się polceniem:
+
+```bash
+cd frontend
+ng build
+```
+
+Skompliowany program jest serwowany przez moduł Python i dostępny pod
+adresem <http://localhost:8000>.
