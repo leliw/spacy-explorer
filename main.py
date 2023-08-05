@@ -11,6 +11,8 @@ import json
 import spacy
 from spacy import displacy
 
+from my_starlette.staticfiles import StaticFiles
+
 nlp = spacy.load("pl_core_news_sm")
 
 app = FastAPI()
@@ -76,7 +78,7 @@ def doc2json(doc):
             "head_text": w.head.text,
             "head_lema": w.head.lemma_,
             "head_pos": w.head.pos_,
-            "children" : [child.lemma_ for child in w.children] 
+            "children": [child.lemma_ for child in w.children] 
             })
     return ret
 
@@ -87,4 +89,4 @@ def readContent(guid: str):
         data = json.load(json_file)
     return data
 
-# app.mount("/", StaticFiles(directory="static", html = True), name="static")
+app.mount("/", StaticFiles(directory="static", html = True), name="static")
