@@ -24,10 +24,8 @@ class Item(BaseModel):
 async def post(item: Item):
     text = item.text
     md5 = hashlib.md5(text.encode('utf-8'))
-    tmpDir = tempfile.gettempdir()
     guid = str(uuid.UUID(md5.hexdigest()))
-    fname = os.path.join(tmpDir, guid + ".txt")
-    with open(fname, '+tw') as f:
+    with open(createTempFileName(guid, "txt"), '+tw') as f:
         f.write(text) 
         f.close()
     doc = nlp(text)
@@ -41,7 +39,7 @@ async def post(item: Item):
             "end_char": w.end_char
             }
         retList.append(ret)
-    with open(os.path.join(tmpDir, guid + ".json"), 'tw') as outfile:
+    with open(createTempFileName(guid, "json"), 'tw') as outfile:
         json.dump({ "text": text, "sents": retList }, outfile)
     return { "guid": guid, "sentsSize": len(retList) }
 
@@ -103,10 +101,13 @@ def doc2json(doc):
             })
     return ret
 
-def readContent(guid: str): 
+def createTempFileName(guid: str, fileExtension: str):
     tmpDir = tempfile.gettempdir()
-    fname = os.path.join(tmpDir, guid + ".json")
-    with open(fname, 'tr') as json_file:
+    fname = os.path.join(tmpDir, "spacyexplorer-" + guid + "." + fileExtension)
+    return fname
+
+def readContent(guid: str): 
+    with open(createTempFileName(guid, "json"), 'tr') as json_file:
         data = json.load(json_file)
     return data
 
