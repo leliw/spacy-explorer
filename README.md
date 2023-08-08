@@ -22,7 +22,7 @@ pip freeze > requirements.txt
 Serwer backend Python:
 
 ```bash
-..\scrapy-env\Scripts\activate
+.env\Scripts\activate
 uvicorn main:app --reload
 ```
 
