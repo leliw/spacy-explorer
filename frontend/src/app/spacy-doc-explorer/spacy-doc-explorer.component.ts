@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, inject } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Token } from '../spacy-token/spacy-token.component';
+import { MatTabsModule } from '@angular/material/tabs';
 
 
 @Component({
@@ -38,5 +39,5 @@ export class SpacyDocExplorerComponent {
     getSentsDisplayUrl(sentence: number): string {
         return `${this.SERVER_URL}/${this.guid}/sents/${sentence}/display`;
     }
-    
+
 }

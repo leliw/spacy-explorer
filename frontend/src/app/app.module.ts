@@ -20,6 +20,7 @@ import { TooltipPosition, MatTooltipModule } from '@angular/material/tooltip';
 import { SpacyDocExplorerComponent } from './spacy-doc-explorer/spacy-doc-explorer.component';
 import { SpacyTokenComponent } from './spacy-token/spacy-token.component';
 import { EntsComponent } from './spacy/ents/ents.component';
+import { MatTabsModule } from '@angular/material/tabs';
 
 @NgModule({
     declarations: [
@@ -44,7 +45,8 @@ import { EntsComponent } from './spacy/ents/ents.component';
         MatSelectModule,
         MatRadioModule,
         MatCardModule,
-        MatTooltipModule
+        MatTooltipModule,
+        MatTabsModule
     ],
     providers: [],
     bootstrap: [AppComponent]

@@ -6,45 +6,44 @@
             <mat-card-title>SpaCy Explorer</mat-card-title>
         </mat-card-header>
         <mat-card-content>
-            <div class="row">
-                <div class="col">
-                    <mat-form-field class="full-width">
-                        <textarea matInput placeholder="Sentencja / zdanie do analizy"
-                            formControlName="sentence"></textarea>
-                        <mat-error *ngIf="form.controls['sentence'].hasError('required')">
-                            Sentencja jest <strong>wymagana</strong>
-                        </mat-error>
-                    </mat-form-field>
-                </div>
-            </div>
-            <mat-divider></mat-divider>
-            <app-spacy-token [tokens]="tokens" style="display: block; word-wrap: break-word;"
-                class="full-width"></app-spacy-token>
+            <mat-form-field class="full-width">
+                <textarea matInput placeholder="Sentencja / zdanie do analizy" formControlName="sentence"></textarea>
+                <mat-error *ngIf="form.controls['sentence'].hasError('required')">
+                    Sentencja jest <strong>wymagana</strong>
+                </mat-error>
+            </mat-form-field>
         </mat-card-content>
         <mat-card-actions>
             <button mat-raised-button color="primary" type="submit">Analizuj</button>
         </mat-card-actions>
-        <mat-card-footer>
-            <ul>
-                <li><span class="noun">NOUN - rzeczownik</span> (<span class="propn">PROPN - właściwy</span>) - kto? co?,</li>
-                <li><span class="verb">VERB - czasownik</span> - co robi? co się z nim dzieje?,</li>
-                <li><span class="adj">ADJ - przymiotnik</span> - jaki? jaka? jakie? czyj? czyja? czyje? który? która? które?,</li>
-                <li><span class="adv">ADV - przysłówek</span> - jak? gdzie? kiedy?,</li>
-                <li><span class="pron">PRON - zaimek</span> - zastępuje inne wyrazy,</li>
-                <li><span class="adp">ADP - przyimek</span> - łączy się najczęściej z rzeczownikiem,</li>
-                <li><span class="cconj">CCONJ - spójnik</span>,</li>
-                <li><span class="part">PART - partykuła</span>.</li>
-            </ul>
-        </mat-card-footer>
     </mat-card>
 </form>
-<mat-divider></mat-divider>
-<app-ents *ngIf="this.guid" guid="{{this.guid}}"></app-ents>
-<div *ngFor="let item of [].constructor(this.sentsSize); let i = index">
-    <mat-divider></mat-divider>
-    <img *ngIf="this.guid" src="{{getSentsDisplayUrl(i)}}" style="width: 100%;" />
-</div>
 
-<mat-divider></mat-divider>
-
-<pre>{{ this.tokens | json}}</pre>
+<mat-tab-group *ngIf="this.guid" mat-stretch-tabs="false" mat-align-tabs="start">
+    <mat-tab label="Części mowy">
+        <app-spacy-token [tokens]="tokens" style="display: block; word-wrap: break-word; margin: 1em 0em;"
+            class="full-width"></app-spacy-token>
+        <ul>
+            <li><span class="noun">NOUN - rzeczownik</span> (<span class="propn">PROPN - właściwy</span>) - kto? co?,</li>
+            <li><span class="verb">VERB - czasownik</span> - co robi? co się z nim dzieje?,</li>
+            <li><span class="adj">ADJ - przymiotnik</span> - jaki? jaka? jakie? czyj? czyja? czyje? który? która? które?,</li>
+            <li><span class="adv">ADV - przysłówek</span> - jak? gdzie? kiedy?,</li>
+            <li><span class="pron">PRON - zaimek</span> - zastępuje inne wyrazy,</li>
+            <li><span class="adp">ADP - przyimek</span> - łączy się najczęściej z rzeczownikiem,</li>
+            <li><span class="cconj">CCONJ - spójnik</span>,</li>
+            <li><span class="part">PART - partykuła</span>.</li>
+        </ul>
+    </mat-tab>
+    <mat-tab label="Encje">
+        <app-ents *ngIf="this.guid" guid="{{this.guid}}"></app-ents>
+    </mat-tab>
+    <mat-tab label="Zależności w zdaniach">
+        <div *ngFor="let item of [].constructor(this.sentsSize); let i = index">
+            <mat-divider></mat-divider>
+            <img *ngIf="this.guid" src="{{getSentsDisplayUrl(i)}}" style="width: 100%;" />
+        </div>
+    </mat-tab>
+    <mat-tab label="Podstawowy JSON">
+        <pre>{{ this.tokens | json}}</pre>
+    </mat-tab>
+</mat-tab-group>
