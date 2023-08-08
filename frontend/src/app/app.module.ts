@@ -19,13 +19,15 @@ import { TooltipPosition, MatTooltipModule } from '@angular/material/tooltip';
 
 import { SpacyDocExplorerComponent } from './spacy-doc-explorer/spacy-doc-explorer.component';
 import { SpacyTokenComponent } from './spacy-token/spacy-token.component';
+import { EntsComponent } from './spacy/ents/ents.component';
 
 @NgModule({
     declarations: [
         AppComponent,
         TextFormComponent,
         SpacyDocExplorerComponent,
-        SpacyTokenComponent
+        SpacyTokenComponent,
+        EntsComponent
     ],
     imports: [
         BrowserModule,

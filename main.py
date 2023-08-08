@@ -54,12 +54,11 @@ async def get_spacy(guid: str):
     doc = nlp(data["text"])
     return doc2json(doc)
 
-@app.get("/api/spacy/{guid}/entities")
+@app.get("/api/spacy/{guid}/ents")
 async def get_spacy(guid: str):
     text = readContent(guid)["text"]
     doc = nlp(text)
     retList = []
-    doc.sents
     for w in doc.ents:
         ret = {
             "text": w.text,

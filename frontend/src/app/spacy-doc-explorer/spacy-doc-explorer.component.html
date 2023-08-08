@@ -38,10 +38,13 @@
         </mat-card-footer>
     </mat-card>
 </form>
+<mat-divider></mat-divider>
+<app-ents *ngIf="this.guid" guid="{{this.guid}}"></app-ents>
 <div *ngFor="let item of [].constructor(this.sentsSize); let i = index">
     <mat-divider></mat-divider>
     <img *ngIf="this.guid" src="{{getSentsDisplayUrl(i)}}" style="width: 100%;" />
 </div>
+
 <mat-divider></mat-divider>
 
 <pre>{{ this.tokens | json}}</pre>
