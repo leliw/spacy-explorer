@@ -41,7 +41,7 @@
 </form>
 <div *ngFor="let item of [].constructor(this.sentsSize); let i = index">
 <mat-divider></mat-divider>
-<img *ngIf="this.guid" src="http://localhost:8000/api/spacy/{{this.guid}}/sents/{{i}}/display" style="width: 100%;"/>
+<img *ngIf="this.guid" src="/api/spacy/{{this.guid}}/sents/{{i}}/display" style="width: 100%;"/>
 </div>
 <mat-divider></mat-divider>
 

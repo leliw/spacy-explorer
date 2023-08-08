@@ -2,6 +2,21 @@
 
 Szybka analiza zdań za pomocą biblioteki SpaCy.
 
+## Utworzenie środowiska
+
+```bash
+python.exe -m pip install --upgrade pip
+python -m venv .env
+.env\Scripts\activate
+pip install "fastapi[all]"
+pip uninstall pydantic-extra-types
+pip uninstall pydantic-settings
+pip install -U pip setuptools wheel
+pip install -U spacy
+python -m spacy download pl_core_news_sm
+pip freeze > requirements.txt
+```
+
 ## Uruchomienie śrdowiska deweloperskiego
 
 Serwer backend Python:
