@@ -28,8 +28,7 @@
             <ul>
                 <li><span class="noun">NOUN - rzeczownik</span> (<span class="propn">PROPN - właściwy</span>) - kto? co?,</li>
                 <li><span class="verb">VERB - czasownik</span> - co robi? co się z nim dzieje?,</li>
-                <li><span class="adj">ADJ - przymiotnik</span> - jaki? jaka? jakie? czyj? czyja? czyje? który? która? które?,
-                </li>
+                <li><span class="adj">ADJ - przymiotnik</span> - jaki? jaka? jakie? czyj? czyja? czyje? który? która? które?,</li>
                 <li><span class="adv">ADV - przysłówek</span> - jak? gdzie? kiedy?,</li>
                 <li><span class="pron">PRON - zaimek</span> - zastępuje inne wyrazy,</li>
                 <li><span class="adp">ADP - przyimek</span> - łączy się najczęściej z rzeczownikiem,</li>
@@ -40,8 +39,8 @@
     </mat-card>
 </form>
 <div *ngFor="let item of [].constructor(this.sentsSize); let i = index">
-<mat-divider></mat-divider>
-<img *ngIf="this.guid" src="/api/spacy/{{this.guid}}/sents/{{i}}/display" style="width: 100%;"/>
+    <mat-divider></mat-divider>
+    <img *ngIf="this.guid" src="{{getSentsDisplayUrl(i)}}" style="width: 100%;" />
 </div>
 <mat-divider></mat-divider>
 

@@ -35,4 +35,8 @@ export class SpacyDocExplorerComponent {
             });
     }
 
+    getSentsDisplayUrl(sentence: number): string {
+        return `${this.SERVER_URL}/${this.guid}/sents/${sentence}/display`;
+    }
+    
 }
