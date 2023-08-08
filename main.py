@@ -56,6 +56,22 @@ async def get_spacy(guid: str):
     doc = nlp(data["text"])
     return doc2json(doc)
 
+@app.get("/api/spacy/{guid}/entities")
+async def get_spacy(guid: str):
+    text = readContent(guid)["text"]
+    doc = nlp(text)
+    retList = []
+    doc.sents
+    for w in doc.ents:
+        ret = {
+            "text": w.text,
+            "start": w.start_char,
+            "end": w.end_char,
+            "label": w.label_
+            }
+        retList.append(ret)
+    return retList
+
 @app.get("/api/spacy/{guid}/sents/{index}/display")
 async def display(guid: str, index: int):
     data = readContent(guid)
@@ -64,6 +80,8 @@ async def display(guid: str, index: int):
     return Response(svg, media_type="image/svg+xml")
 
 def doc2json(doc):
+    if doc == None:
+        doc = nlp("text")
     ret = []
     for w in doc:
         ret.append({
@@ -73,6 +91,9 @@ def doc2json(doc):
             "tag": w.tag_,
             "dep": w.dep_,
             "shape": w.shape_,
+            "morph": w.morph.to_dict(),
+            "end_iob": w.ent_iob_,
+            "ent_type_": w.ent_type_,
             "is_alpha": w.is_alpha,
             "is_stop": w.is_stop,
             "head_text": w.head.text,
