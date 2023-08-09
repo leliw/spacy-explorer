@@ -10,11 +10,13 @@ import json
 
 import spacy
 from spacy import displacy
+from spacy.matcher import Matcher
+
 
 from my_starlette.staticfiles import StaticFiles
 
 nlp = spacy.load("pl_core_news_sm")
-#nlp = spacy.load("pl_core_news_lg")
+# nlp = spacy.load("pl_core_news_lg")
 nlp("Szybki start")
 
 app = FastAPI()
@@ -79,6 +81,33 @@ async def get_spacy(guid: str):
             "label": w.label_
             }
         retList.append(ret)
+    return retList
+
+@app.get("/api/spacy/{guid}/verbs")
+async def get_spacy(guid: str):
+    matcher = Matcher(nlp.vocab)
+    text = readContent(guid)["text"]
+    doc = nlp(text)
+    patterns = [
+        [{"POS": "PROPN"}, {"POS": "ADV"}, {"POS": "VERB"}],
+        [{"POS": "NOUN"}, {"POS": "ADV"}, {"POS": "VERB"}],
+        [{"POS": "PROPN"}, {"POS": "VERB"}],
+        [{"POS": "NOUN"}, {"POS": "VERB"}],
+        [{"POS": "ADV"}, {"POS": "VERB"}],
+        [{"POS": "VERB"}],
+    ]
+    matcher.add("verbs", patterns)
+    verb_phrases = matcher(doc)
+    retList = []
+    last_end = -1
+    for match_id, start, end in verb_phrases:
+        string_id = nlp.vocab.strings[match_id] # Get string representation
+        span = doc[start:end]  # The matched span
+        if last_end != end:
+            # if end token is the same as previous, it is shorten version od the same verb context
+            # print(match_id, string_id, start, end, span.text)
+            retList.append(span.text)
+        last_end = end
     return retList
 
 @app.get("/api/spacy/{guid}/sents/{index}/display")
