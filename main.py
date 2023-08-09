@@ -14,6 +14,8 @@ from spacy import displacy
 from my_starlette.staticfiles import StaticFiles
 
 nlp = spacy.load("pl_core_news_sm")
+#nlp = spacy.load("pl_core_news_lg")
+nlp("Szybki start")
 
 app = FastAPI()
 
@@ -29,19 +31,29 @@ async def post(item: Item):
         f.write(text) 
         f.close()
     doc = nlp(text)
-    retList = []
-    for w in doc.sents:
-        ret = {
-            "sent": w.text,
-            "start": w.start,
-            "start_char": w.start_char,
-            "end": w.end,
-            "end_char": w.end_char
-            }
-        retList.append(ret)
+    sents = []
+    for s in doc.sents:
+        sents.append({
+            "sent": s.text,
+            "start": s.start,
+            "start_char": s.start_char,
+            "end": s.end,
+            "end_char": s.end_char
+            })
+    json_dict = { "text": text, "sents": sents }
+    # Nie działa dla PL
+    # noun_chunks = []
+    # for c in doc.noun_chunks:
+    #     noun_chunks.append({
+    #         "text": c.text,
+    #         "root_text": c.root.text,
+    #         "root_dep": c.root.dep_,
+    #         "root_head_text": c.root.head.text
+    #     })
+    # json_dict = { "text": text, "sents": sents, "noun_chunks": noun_chunks }
     with open(createTempFileName(guid, "json"), 'tw') as outfile:
-        json.dump({ "text": text, "sents": retList }, outfile)
-    return { "guid": guid, "sentsSize": len(retList) }
+        json.dump(json_dict, outfile)
+    return { "guid": guid, "sentsSize": len(sents) }
 
 @app.get("/api/spacy/explain")
 async def explain(label: str):
