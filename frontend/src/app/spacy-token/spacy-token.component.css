@@ -5,3 +5,15 @@ span {
 .space-before {
     margin-left: 0.5em;
 }
+
+.overlay-container {
+    min-width: 200px;
+    min-height: 200px;
+    background-color: whitesmoke;
+    position: absolute;
+    background: white;
+    padding: 0.5em;
+    box-shadow: 0 3px 10px rgba(0,0,0,.24), 0 0 2px rgba(0,0,0,.12);
+    font-size: 14px;
+    z-index: 99;
+  }
