@@ -1,5 +1,5 @@
 <span *ngFor="let token of tokens" cdkOverlayOrigin #trigger="cdkOverlayOrigin"
-    (mouseenter)="onMouseEnter($event, token)" (mouseleave)="closeOverlay()" [ngClass]="{
+    (mouseenter)="onMouseEnter($event, token)" (mouseleave)="onMouseLeave()" (click)="openOverlay($event, token)" [ngClass]="{
     'space-before': token.pos!='PUNCT',
     'noun' : token.pos=='NOUN',
     'propn' : token.pos=='PROPN',
@@ -17,8 +17,8 @@
         <mat-card-content>
             <pre>{{ this.currentToken | json}}</pre>
         </mat-card-content>
-        <!-- <mat-card-actions align="end">
+        <mat-card-actions align="end">
             <button mat-button (click)="closeOverlay()">Zamknij</button>
-        </mat-card-actions> -->
+        </mat-card-actions>
     </mat-card>
 </ng-template>

@@ -25,14 +25,30 @@ export class SpacyTokenComponent {
     @ViewChild('tooltipContainer', { read: ViewContainerRef }) tooltipContainer!: ViewContainerRef;
 
     isOverlayOpen = false;
+    isHover = false;
     currentElement!: HTMLElement;
     currentToken!: Token;
 
     onMouseEnter(event: MouseEvent, token: Token) {
         if (!this.isOverlayOpen) {
+            this.openOverlay(event, token);
+            this.isHover = true;
+        }
+    }
+
+    openOverlay(event: MouseEvent, token: Token) {
+        this.isHover = false;
+        if (!this.isOverlayOpen) {
             this.isOverlayOpen = true;
             this.currentElement = event.target as HTMLElement;
             this.currentToken = token;
+        }
+
+    }
+    onMouseLeave() {
+        if (this.isHover) {
+            this.isHover = false;
+            this.closeOverlay();
         }
     }
 
