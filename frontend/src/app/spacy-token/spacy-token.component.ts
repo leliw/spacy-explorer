@@ -13,6 +13,7 @@ export interface Token {
     head_lema: string
     head_pos: string
     children: string[]
+    morph: any
 }
 
 @Component({
