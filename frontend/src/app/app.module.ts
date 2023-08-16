@@ -21,7 +21,8 @@ import { SpacyDocExplorerComponent } from './spacy-doc-explorer/spacy-doc-explor
 import { SpacyTokenComponent } from './spacy-token/spacy-token.component';
 import { EntsComponent } from './spacy/ents/ents.component';
 import { MatTabsModule } from '@angular/material/tabs';
-import {OverlayModule} from '@angular/cdk/overlay';
+import { OverlayModule } from '@angular/cdk/overlay';
+import { MatListModule } from '@angular/material/list';
 
 
 @NgModule({
@@ -49,7 +50,8 @@ import {OverlayModule} from '@angular/cdk/overlay';
         MatCardModule,
         MatTooltipModule,
         MatTabsModule,
-        OverlayModule
+        OverlayModule,
+        MatListModule
     ],
     providers: [],
     bootstrap: [AppComponent]

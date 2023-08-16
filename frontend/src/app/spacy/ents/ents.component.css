@@ -5,3 +5,12 @@ span {
 .space-before {
     margin-left: 0.5em;
 }
+
+.legend {
+    float: right;
+    margin: 0.5em;
+}
+
+.legend .mdc-list-item.mdc-list-item--with-one-line {
+    height: auto;
+}

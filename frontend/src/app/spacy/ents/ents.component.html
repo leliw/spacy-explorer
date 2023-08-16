@@ -1,11 +1,14 @@
-<span *ngFor="let token of tokens" [ngClass]="{
+<div class="legend">
+    <mat-list>
+        <mat-list-item *ngFor="let ent of this.ents">{{ent.text}} - <span [ngClass]="ent.label">{{ent.label}}</span></mat-list-item>
+    </mat-list>
+</div>
+<div class="content">
+    <span *ngFor="let token of tokens" [ngClass]="{
     'space-before': token.pos!='PUNCT',
     'geogName' : token.ent_type_=='geogName',
     'placeName' : token.ent_type_=='placeName',
     'persName' : token.ent_type_=='persName',
     'orgName' : token.ent_type_=='orgName',
 }">{{token.text}}</span>
-
-<ul>
-    <li *ngFor="let ent of this.ents"><span [ngClass]="ent.label">{{ent.text}}</span> - {{ent.label}}</li>
-</ul>
+</div>
