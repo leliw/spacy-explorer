@@ -26,6 +26,18 @@
   margin-right: 0;
 }
 
+::ng-deep.geogName {
+    background-color: lightblue;
+}
+::ng-deep.placeName {
+    background-color: lightcoral
+}
+::ng-deep.persName {
+    background-color: lightgreen;
+}
+::ng-deep.orgName {
+    background-color: lightpink;
+}
 
 ::ng-deep.noun {
     background-color: lightblue;

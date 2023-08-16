@@ -13,6 +13,20 @@
     'part' : token.pos=='PART',
 }">{{token.text}}</span>
 
+
+<ul>
+    <li><span class="propn">PROPN - rzeczownik właściwy</span> - kto? co?,</li>
+    <li><span class="noun">NOUN - rzeczownik</span> - kto? co?,</li>
+    <li><span class="verb">VERB - czasownik</span> - co robi? co się z nim dzieje?,</li>
+    <li><span class="adj">ADJ - przymiotnik</span> - jaki? jaka? jakie? czyj? czyja? czyje? który? która? które?,</li>
+    <li><span class="adv">ADV - przysłówek</span> - jak? gdzie? kiedy?,</li>
+    <li><span class="pron">PRON - zaimek</span> - zastępuje inne wyrazy,</li>
+    <li><span class="adp">ADP - przyimek</span> - łączy się najczęściej z rzeczownikiem,</li>
+    <li><span class="cconj">CCONJ - spójnik</span>,</li>
+    <li><span class="part">PART - partykuła</span>.</li>
+</ul>
+
+
 <ng-template cdkConnectedOverlay [cdkConnectedOverlayOrigin]="currentElement" [cdkConnectedOverlayOpen]="isOverlayOpen">
     <mat-card class="overlay-container">
         <mat-card-title>{{this.currentToken.text}}</mat-card-title>

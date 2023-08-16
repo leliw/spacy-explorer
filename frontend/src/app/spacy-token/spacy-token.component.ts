@@ -13,7 +13,8 @@ export interface Token {
     head_lema: string
     head_pos: string
     children: string[]
-    morph: any
+    morph: any,
+    ent_type_: string
 }
 
 @Component({
@@ -22,8 +23,8 @@ export interface Token {
     styleUrls: ['./spacy-token.component.css']
 })
 export class SpacyTokenComponent {
+
     @Input() tokens!: Token[];
-    @ViewChild('tooltipContainer', { read: ViewContainerRef }) tooltipContainer!: ViewContainerRef;
 
     isOverlayOpen = false;
     isHover = false;
