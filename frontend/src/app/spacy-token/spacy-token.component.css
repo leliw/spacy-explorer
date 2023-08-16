@@ -29,3 +29,8 @@ span {
 .legend .mdc-list-item.mdc-list-item--with-one-line {
     height: auto;
 }
+
+.content {
+    overflow-wrap: break-word;
+    margin: 0.5em;
+}

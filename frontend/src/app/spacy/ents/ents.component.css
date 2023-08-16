@@ -9,6 +9,7 @@ span {
 .legend {
     float: right;
     margin: 0 0.5em;
+    height: 100%;
 }
 
 .legend .mdc-list {
@@ -16,4 +17,10 @@ span {
 }
 .legend .mdc-list-item.mdc-list-item--with-one-line {
     height: auto;
+    text-align: justify-all;
+}
+
+.content {
+    overflow-wrap: break-word;
+    margin: 0.5em;
 }

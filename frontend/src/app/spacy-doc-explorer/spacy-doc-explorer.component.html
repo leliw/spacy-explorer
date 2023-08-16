@@ -21,8 +21,7 @@
 
 <mat-tab-group *ngIf="this.guid" mat-stretch-tabs="false" mat-align-tabs="start">
     <mat-tab label="Części mowy">
-        <app-spacy-token [tokens]="tokens" style="display: block; word-wrap: break-word; margin: 1em 0em;"
-            class="full-width"></app-spacy-token>
+        <app-spacy-token [tokens]="tokens"></app-spacy-token>
     </mat-tab>
     <mat-tab label="Encje">
         <app-ents *ngIf="this.guid" [tokens]="tokens" guid="{{this.guid}}"></app-ents>
