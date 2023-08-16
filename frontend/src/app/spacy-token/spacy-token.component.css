@@ -13,7 +13,19 @@ span {
     position: absolute;
     background: white;
     padding: 0.5em;
-    box-shadow: 0 3px 10px rgba(0,0,0,.24), 0 0 2px rgba(0,0,0,.12);
+    box-shadow: 0 3px 10px rgba(0, 0, 0, .24), 0 0 2px rgba(0, 0, 0, .12);
     font-size: 14px;
     z-index: 99;
-  }
+}
+
+.legend {
+    float: right;
+    margin: 0 0.5em;
+}
+
+.legend .mdc-list {
+    padding: 0;
+}
+.legend .mdc-list-item.mdc-list-item--with-one-line {
+    height: auto;
+}

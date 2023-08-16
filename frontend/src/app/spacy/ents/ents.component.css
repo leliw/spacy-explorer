@@ -8,9 +8,12 @@ span {
 
 .legend {
     float: right;
-    margin: 0.5em;
+    margin: 0 0.5em;
 }
 
+.legend .mdc-list {
+    padding: 0;
+}
 .legend .mdc-list-item.mdc-list-item--with-one-line {
     height: auto;
 }
