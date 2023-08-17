@@ -26,6 +26,11 @@
   margin-right: 0;
 }
 
+.actions-row {
+    margin: 1em;
+    text-align: end;
+}
+
 ::ng-deep.geogName {
     background-color: lightblue;
 }

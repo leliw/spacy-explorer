@@ -15,7 +15,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatSelectModule } from '@angular/material/select';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatCardModule } from '@angular/material/card';
-import { TooltipPosition, MatTooltipModule } from '@angular/material/tooltip';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 import { SpacyDocExplorerComponent } from './spacy-doc-explorer/spacy-doc-explorer.component';
 import { SpacyTokenComponent } from './spacy-token/spacy-token.component';
@@ -23,6 +23,10 @@ import { EntsComponent } from './spacy/ents/ents.component';
 import { MatTabsModule } from '@angular/material/tabs';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { MatListModule } from '@angular/material/list';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatToolbarModule } from '@angular/material/toolbar';
+
+import { InputComponent } from './input/input.component';
 
 
 @NgModule({
@@ -31,7 +35,8 @@ import { MatListModule } from '@angular/material/list';
         TextFormComponent,
         SpacyDocExplorerComponent,
         SpacyTokenComponent,
-        EntsComponent
+        EntsComponent,
+        InputComponent
     ],
     imports: [
         BrowserModule,
@@ -51,7 +56,9 @@ import { MatListModule } from '@angular/material/list';
         MatTooltipModule,
         MatTabsModule,
         OverlayModule,
-        MatListModule
+        MatListModule,
+        MatSidenavModule,
+        MatToolbarModule
     ],
     providers: [],
     bootstrap: [AppComponent]

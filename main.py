@@ -1,4 +1,9 @@
-import io
+from pathlib import Path
+import urllib.request
+from bs4 import BeautifulSoup, Tag
+import json
+from os import listdir
+from os.path import isfile
 import os, tempfile
 import uuid
 import hashlib
@@ -19,10 +24,28 @@ nlp = spacy.load("pl_core_news_sm")
 # nlp = spacy.load("pl_core_news_lg")
 nlp("Szybki start")
 
+
+example_dir = Path.cwd() / "data" / "example_text"
+
+def load_json_data(file: str):
+    with open(file, 'tr', encoding="UTF-8") as json_file:
+        data = json.load(json_file)
+    return data
+
 app = FastAPI()
 
 class Item(BaseModel):
     text: str
+
+@app.get("/api/example")
+async def example_text():
+    onlyfiles = [f[:-5] for f in listdir(example_dir) if isfile(example_dir / f) and f[-5:] == ".json"]
+    return onlyfiles
+
+@app.get("/api/example/{path}")
+async def example_text(path: str | None):
+    example = load_json_data(example_dir / f"{path}.json")
+    return { "text" : example.get("text") }
 
 @app.post("/api/spacy")
 async def post(item: Item):

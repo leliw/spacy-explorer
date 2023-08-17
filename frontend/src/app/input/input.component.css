@@ -1,0 +1,29 @@
+.main-container {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+.full-width {
+    width: 100%;
+}
+
+.spacy-card {
+    min-width: 120px;
+    height  : 100%;
+    margin: 0.5em auto;
+}
+
+h3 {
+    font-size: larger;
+    text-align: center;
+    margin: 0.2em 0.5em;
+}
+
+.left-side a,
+.right-side a {
+    display: block;
+    margin: 0.2em 0.5em;
+}

@@ -1,8 +1,9 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, inject } from '@angular/core';
+import { Component, OnDestroy, OnInit, inject } from '@angular/core';
+import { Location } from '@angular/common';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Token } from '../spacy-token/spacy-token.component';
-import { MatTabsModule } from '@angular/material/tabs';
+import { ActivatedRoute } from '@angular/router';
 
 
 @Component({
@@ -10,7 +11,7 @@ import { MatTabsModule } from '@angular/material/tabs';
     templateUrl: './spacy-doc-explorer.component.html',
     styleUrls: ['./spacy-doc-explorer.component.css']
 })
-export class SpacyDocExplorerComponent {
+export class SpacyDocExplorerComponent implements OnInit, OnDestroy {
     private fb = inject(FormBuilder);
     form = this.fb.group({
         sentence: ['', Validators.required],
@@ -19,25 +20,31 @@ export class SpacyDocExplorerComponent {
     sentsSize!: number;
     tokens!: Token[];
     SERVER_URL = "/api/spacy";
+    private sub: any;
 
-    constructor(private http: HttpClient) {
+    constructor(private route: ActivatedRoute, private http: HttpClient, private _location: Location) {
         this.form.controls['sentence'].setValue(
             'Do tragicznego zdarzenia doszło w sobotę wieczorem na alei Hallera w Gdańsku. 52-letni motocyklista najpierw potrącił stojącą przed przejściem 15-latkę, a później uderzył w drzewo. Mimo reanimacji nie udało się go uratować. Dziewczyna z urazem kończyn trafiła do szpitala.'
         );
     }
 
-    onSubmit(): void {
-        this.http.post<{ guid: string, sentsSize: number }>(this.SERVER_URL, { "text": this.form.controls['sentence'].value })
-            .subscribe(g => {
-                this.guid = g.guid;
-                this.sentsSize = g.sentsSize;
-                this.http.get<Token[]>(this.SERVER_URL + "/" + this.guid)
-                    .subscribe(s => this.tokens = s)
-            });
+    ngOnInit() {
+        this.sub = this.route.params.subscribe(params => {
+            this.guid = params['guid'];
+            this.http.get<Token[]>(this.SERVER_URL + "/" + this.guid)
+                .subscribe(s => this.tokens = s)
+        });
+    }
+
+    ngOnDestroy() {
+        this.sub.unsubscribe();
     }
 
     getSentsDisplayUrl(sentence: number): string {
         return `${this.SERVER_URL}/${this.guid}/sents/${sentence}/display`;
     }
 
+    backClicked() {
+        this._location.back();
+    }
 }
