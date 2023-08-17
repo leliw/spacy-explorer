@@ -1,10 +1,26 @@
-span {
-    font-size: large;
-}
-
 .space-before {
     margin-left: 0.5em;
 }
+
+.legend {
+    height: 100%;
+    margin: 0 0.5em;
+}
+
+.legend .mdc-list {
+    padding: 0;
+}
+.legend .mdc-list-item.mdc-list-item--with-one-line {
+    height: auto;
+    text-align: justify;
+}
+
+.content {
+    height: 100%;
+    margin: 0.5em;
+    font-size: large;
+}
+
 
 .overlay-container {
     min-width: 200px;
@@ -16,21 +32,4 @@ span {
     box-shadow: 0 3px 10px rgba(0, 0, 0, .24), 0 0 2px rgba(0, 0, 0, .12);
     font-size: 14px;
     z-index: 99;
-}
-
-.legend {
-    float: right;
-    margin: 0 0.5em;
-}
-
-.legend .mdc-list {
-    padding: 0;
-}
-.legend .mdc-list-item.mdc-list-item--with-one-line {
-    height: auto;
-}
-
-.content {
-    overflow-wrap: break-word;
-    margin: 0.5em;
 }

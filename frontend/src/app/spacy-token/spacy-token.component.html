@@ -1,20 +1,24 @@
-<div class="legend">
-    <mat-list>
-        <mat-list-item matTooltip="kto? co?"><span class="propn">PROPN</span> - rzeczownik właściwy</mat-list-item>
-        <mat-list-item matTooltip="kto? co?"><span class="noun">NOUN</span> - rzeczownik</mat-list-item>
-        <mat-list-item matTooltip="co robi? co się z nim dzieje?"><span class="verb">VERB</span> - czasownik</mat-list-item>
-        <mat-list-item matTooltip="jaki? jaka? jakie? czyj? czyja? czyje? który? która? które?"><span class="adj">ADJ</span> - przymiotnik</mat-list-item>
-        <mat-list-item matTooltip="jak? gdzie? kiedy?"><span class="adv">ADV</span> - przysłówek</mat-list-item>
-        <mat-list-item matTooltip="zastępuje inne wyrazy"><span class="pron">PRON</span> - zaimek</mat-list-item>
-        <mat-list-item matTooltip="łączy się najczęściej z rzeczownikiem"><span class="adp">ADP</span> - przyimek</mat-list-item>
-        <mat-list-item><span class="cconj">CCONJ</span> - spójnik</mat-list-item>
-        <mat-list-item><span class="part">PART</span> - partykuła</mat-list-item>
-    </mat-list>
-</div>
-<div class="content">
-    <span *ngFor="let token of tokens" cdkOverlayOrigin #trigger="cdkOverlayOrigin"
-        (mouseenter)="onMouseEnter($event, token)" (mouseleave)="onMouseLeave()" (click)="openOverlay($event, token)"
-        [ngClass]="{
+<mat-drawer-container autosize>
+    <mat-drawer mode="side" opened="true" position="end" class="legend">
+        <mat-list>
+            <mat-list-item matTooltip="kto? co?"><span class="propn">PROPN</span> - rzeczownik właściwy</mat-list-item>
+            <mat-list-item matTooltip="kto? co?"><span class="noun">NOUN</span> - rzeczownik</mat-list-item>
+            <mat-list-item matTooltip="co robi? co się z nim dzieje?"><span class="verb">VERB</span> -
+                czasownik</mat-list-item>
+            <mat-list-item matTooltip="jaki? jaka? jakie? czyj? czyja? czyje? który? która? które?"><span
+                    class="adj">ADJ</span> - przymiotnik</mat-list-item>
+            <mat-list-item matTooltip="jak? gdzie? kiedy?"><span class="adv">ADV</span> - przysłówek</mat-list-item>
+            <mat-list-item matTooltip="zastępuje inne wyrazy"><span class="pron">PRON</span> - zaimek</mat-list-item>
+            <mat-list-item matTooltip="łączy się najczęściej z rzeczownikiem"><span class="adp">ADP</span> -
+                przyimek</mat-list-item>
+            <mat-list-item><span class="cconj">CCONJ</span> - spójnik</mat-list-item>
+            <mat-list-item><span class="part">PART</span> - partykuła</mat-list-item>
+        </mat-list>
+    </mat-drawer>
+    <div class="content">
+        <span *ngFor="let token of tokens" cdkOverlayOrigin #trigger="cdkOverlayOrigin"
+            (mouseenter)="onMouseEnter($event, token)" (mouseleave)="onMouseLeave()"
+            (click)="openOverlay($event, token)" [ngClass]="{
     'space-before': token.pos!='PUNCT',
     'noun' : token.pos=='NOUN',
     'propn' : token.pos=='PROPN',
@@ -25,8 +29,8 @@
     'adp' : token.pos=='ADP',
     'cconj' : token.pos=='CCONJ',
     'part' : token.pos=='PART'}">{{token.text}}</span>
-</div>
-
+    </div>
+</mat-drawer-container>
 
 
 
