@@ -15,6 +15,7 @@ export interface Token {
     children: string[]
     morph: any,
     ent_type_: string
+    space_before: boolean | undefined
 }
 
 @Component({

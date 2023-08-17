@@ -19,16 +19,16 @@
         <span *ngFor="let token of tokens" cdkOverlayOrigin #trigger="cdkOverlayOrigin"
             (mouseenter)="onMouseEnter($event, token)" (mouseleave)="onMouseLeave()"
             (click)="openOverlay($event, token)" [ngClass]="{
-    'space-before': token.pos!='PUNCT',
-    'noun' : token.pos=='NOUN',
-    'propn' : token.pos=='PROPN',
-    'verb' : token.pos=='VERB',
-    'adj' : token.pos=='ADJ',
-    'adv' : token.pos=='ADV',
-    'pron' : token.pos=='PRON',
-    'adp' : token.pos=='ADP',
-    'cconj' : token.pos=='CCONJ',
-    'part' : token.pos=='PART'}">{{token.text}}</span>
+                'space-before': token.space_before,
+                'noun' : token.pos=='NOUN',
+                'propn' : token.pos=='PROPN',
+                'verb' : token.pos=='VERB',
+                'adj' : token.pos=='ADJ',
+                'adv' : token.pos=='ADV',
+                'pron' : token.pos=='PRON',
+                'adp' : token.pos=='ADP',
+                'cconj' : token.pos=='CCONJ',
+                'part' : token.pos=='PART'}">{{token.text}} </span>
     </div>
 </mat-drawer-container>
 

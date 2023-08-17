@@ -17,16 +17,16 @@ export class EntsComponent implements OnChanges {
     @Input() tokens!: Token[];
     @Input() guid!: string;
     
-    text!: string;
+    entTokens!: Token[];
     ents!: Ent[];
 
     constructor(private http: HttpClient) {}
 
     ngOnChanges(changes: SimpleChanges) {
         let url = `/api/spacy/${this.guid}/ents`;
-        this.http.get<{ text: string, ents: Ent[]}>(url)
+        this.http.get<{ ents: Ent[], ent_tokens: Token[]}>(url)
         .subscribe(r => {
-            this.text = r.text;
+            this.entTokens = r.ent_tokens;
             this.ents = r.ents;
         });
     }

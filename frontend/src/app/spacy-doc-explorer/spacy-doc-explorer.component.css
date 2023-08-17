@@ -31,6 +31,12 @@
     text-align: end;
 }
 
+::ng-deep.date {
+    background-color: lightgray;
+}
+::ng-deep.time {
+    background-color: lightyellow;
+}
 ::ng-deep.geogName {
     background-color: lightblue;
 }

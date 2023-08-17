@@ -38,6 +38,14 @@ def clean_text(text: str) -> str:
     #text = ' '.join(text.split())
     return text
 
+def space_between_tokens(prev: str, next: str) -> bool:
+    if prev == None:
+        return False
+    if prev[-1] in [',,', '(', '[', '{', '\n'] or next in ['.', ',', ';', ':', '!', '?', ')', ']', '}']:
+        return False
+    else:
+        return True
+
 app = FastAPI()
 
 class Item(BaseModel):
@@ -108,16 +116,36 @@ async def get_spacy_entities(guid: str):
     """ Zwraca NER (nazwane encje) znalezione w tekście. """
     text = readContent(guid)["text"]
     doc = nlp(text)
-    retList = []
-    for w in doc.ents:
+    ents = []
+    for ent in doc.ents:
         ret = {
-            "text": w.text,
-            "start": w.start_char,
-            "end": w.end_char,
-            "label": w.label_
+            "text": ent.text,
+            "start": ent.start_char,
+            "end": ent.end_char,
+            "label": ent.label_
             }
-        retList.append(ret)
-    return { "text": text, "ents": retList }
+        ents.append(ret)
+    ent_tokens = []
+    entity = None
+    prev_token_text = None
+    for token in doc:
+        space_before = space_between_tokens(prev_token_text, token.text)
+        prev_token_text = token.text
+        if token.ent_iob_ == "B":
+            # Początek encji - zapamiętuję aby dołączyć do kolejnego tokenu
+            entity = { "text": token.text, "ent_type_": token.ent_type_, "space_before": space_before }
+        elif token.ent_iob_ == "I":
+            # Środek encji - dodaję do tego co zapamiętałem
+            entity.update({ "text": entity.get("text") +  (" " if space_before else "") + token.text})
+        else:
+            # Już poza encją
+            if entity != None:
+                ent_tokens.append(entity)
+                entity = None
+            ent_tokens.append({ "text": token.text, "space_before": space_before })
+    if entity != None:
+        ent_tokens.append(entity)
+    return { "ents": ents, "ent_tokens": ent_tokens }
 
 @app.get("/api/spacy/{guid}/verbs")
 async def get_spacy(guid: str):
@@ -157,23 +185,27 @@ def doc2json(doc):
     if doc == None:
         doc = nlp("text")
     ret = []
-    for w in doc:
+    prev_token_text = None
+    for token in doc:
+        space_before = space_between_tokens(prev_token_text, token.text)
+        prev_token_text = token.text
         ret.append({
-            "text": w.text,
-            "lema": w.lemma_,
-            "pos": w.pos_,
-            "tag": w.tag_,
-            "dep": w.dep_,
-            "shape": w.shape_,
-            "morph": w.morph.to_dict(),
-            "end_iob": w.ent_iob_,
-            "ent_type_": w.ent_type_,
-            "is_alpha": w.is_alpha,
-            "is_stop": w.is_stop,
-            "head_text": w.head.text,
-            "head_lema": w.head.lemma_,
-            "head_pos": w.head.pos_,
-            "children": [child.lemma_ for child in w.children] 
+            "text": token.text,
+            "lema": token.lemma_,
+            "pos": token.pos_,
+            "tag": token.tag_,
+            "dep": token.dep_,
+            "shape": token.shape_,
+            "morph": token.morph.to_dict(),
+            "end_iob": token.ent_iob_,
+            "ent_type_": token.ent_type_,
+            "is_alpha": token.is_alpha,
+            "is_stop": token.is_stop,
+            "head_text": token.head.text,
+            "head_lema": token.head.lemma_,
+            "head_pos": token.head.pos_,
+            "children": [child.lemma_ for child in token.children],
+            "space_before": space_before
             })
     return ret
 

@@ -6,11 +6,13 @@
         </mat-list>
     </mat-drawer>
     <div class="content">
-        <span *ngFor="let token of tokens" [ngClass]="{
-        'space-before': token.pos!='PUNCT',
-        'geogName' : token.ent_type_=='geogName',
-        'placeName' : token.ent_type_=='placeName',
-        'persName' : token.ent_type_=='persName',
-        'orgName' : token.ent_type_=='orgName'}">{{token.text}}</span>
+        <span *ngFor="let token of entTokens" [ngClass]="{
+                'space-before': token.space_before,
+                'date' : token.ent_type_=='date',
+                'time' : token.ent_type_=='time',
+                'geogName' : token.ent_type_=='geogName',
+                'placeName' : token.ent_type_=='placeName',
+                'persName' : token.ent_type_=='persName',
+                'orgName' : token.ent_type_=='orgName'}">{{token.text}} </span>
     </div>
 </mat-drawer-container>
