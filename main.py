@@ -1,12 +1,12 @@
 from pathlib import Path
 import urllib.request
 from bs4 import BeautifulSoup, Tag
-import json
 from os import listdir
 from os.path import isfile
 import os, tempfile
 import uuid
 import hashlib
+import re
 
 from fastapi import FastAPI, Response
 from pydantic import BaseModel
@@ -32,23 +32,35 @@ def load_json_data(file: str):
         data = json.load(json_file)
     return data
 
+def clean_text(text: str) -> str:
+    text = text.replace(" \n", "\n")
+    text = re.sub(r"([a-ząćęłńóśźż,.])\n([^\n])",r"\1 \2", text)
+    #text = ' '.join(text.split())
+    return text
+
 app = FastAPI()
 
 class Item(BaseModel):
     text: str
 
 @app.get("/api/example")
-async def example_text():
+async def list_of_examples():
+    """ Zwraca listę przykładowych plików z tekstami do analizy. """
     onlyfiles = [f[:-5] for f in listdir(example_dir) if isfile(example_dir / f) and f[-5:] == ".json"]
     return onlyfiles
 
-@app.get("/api/example/{path}")
-async def example_text(path: str | None):
-    example = load_json_data(example_dir / f"{path}.json")
-    return { "text" : example.get("text") }
+@app.get("/api/example/{file}")
+async def example_text(file: str | None):
+    """ Zwraca treść przykładowego pliku. """
+    example = load_json_data(example_dir / f"{file}.json")
+    text = example.get("text")
+    if text.count("\n\n") > 3:
+        text = clean_text(text)
+    return { "text" : text }
 
 @app.post("/api/spacy")
-async def post(item: Item):
+async def document(item: Item):
+    """ Odbiera dokument do analizy"""
     text = item.text
     md5 = hashlib.md5(text.encode('utf-8'))
     guid = str(uuid.UUID(md5.hexdigest()))
@@ -92,7 +104,8 @@ async def get_spacy(guid: str):
     return doc2json(doc)
 
 @app.get("/api/spacy/{guid}/ents")
-async def get_spacy(guid: str):
+async def get_spacy_entities(guid: str):
+    """ Zwraca NER (nazwane encje) znalezione w tekście. """
     text = readContent(guid)["text"]
     doc = nlp(text)
     retList = []
@@ -104,7 +117,7 @@ async def get_spacy(guid: str):
             "label": w.label_
             }
         retList.append(ret)
-    return retList
+    return { "text": text, "ents": retList }
 
 @app.get("/api/spacy/{guid}/verbs")
 async def get_spacy(guid: str):
@@ -174,4 +187,5 @@ def readContent(guid: str):
         data = json.load(json_file)
     return data
 
+# Pliki statyczne Angular
 app.mount("/", StaticFiles(directory="static", html = True), name="static")

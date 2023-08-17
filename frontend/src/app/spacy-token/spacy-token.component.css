@@ -19,6 +19,7 @@
     height: 100%;
     margin: 0.5em;
     font-size: large;
+    white-space: pre-wrap;
 }
 
 
